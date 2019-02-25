@@ -8,8 +8,23 @@
 <body>
   <p>Welcome to Heartbleed</p>
 
+  <button onclick="handleClick()">Click</button>
+
   <script>
-    var socket = io('http://localhost:3000');
+    var socket = io.connect('http://localhost:3000');
+
+    socket.on('news', function(data) {
+      console.log('client side news: data is: ', data);
+    })
+
+    var handleClick = function() {
+      console.log('handleClick function');
+      socket.emit('clientEvent, ', {my: 'data'});
+    }
+
+    socket.on('clientEvent', function(foo) {
+      console.log('socket.on(clientEvent)');
+    })
   </script>
 </body>
 </html>
